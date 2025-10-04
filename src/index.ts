@@ -52,29 +52,31 @@ async function serve() {
         console.log(`Logged in as ${c.user.tag}`)
     })
 
-    client.on(Events.InteractionCreate, async interaction => {
-        if (!interaction.isChatInputCommand()) {
-            return
-        }
-
-        const command = commands.get(interaction.commandName)
-
-        if (command == null) {
-            console.error(`Unknown command: ${interaction.commandName}`)
-            return
-        }
-
-        try {
-            await command.execute(interaction)
-        } catch (error) {
-            console.error(error)
-
-            if (interaction.replied || interaction.deferred) {
-                await interaction.followUp({ content: "There was an error while executing this command!", flags: MessageFlags.Ephemeral })
-            } else {
-                await interaction.reply({ content: "There was an error while executing this command!", flags: MessageFlags.Ephemeral })
+    client.on(Events.InteractionCreate, interaction => {
+        void (async () => {
+            if (!interaction.isChatInputCommand()) {
+                return
             }
-        }
+
+            const command = commands.get(interaction.commandName)
+
+            if (command == null) {
+                console.error(`Unknown command: ${interaction.commandName}`)
+                return
+            }
+
+            try {
+                await command.execute(interaction)
+            } catch (error) {
+                console.error(error)
+
+                if (interaction.replied || interaction.deferred) {
+                    await interaction.followUp({ content: "There was an error while executing this command!", flags: MessageFlags.Ephemeral })
+                } else {
+                    await interaction.reply({ content: "There was an error while executing this command!", flags: MessageFlags.Ephemeral })
+                }
+            }
+        })()
     })
 
     await client.login(discordToken)
