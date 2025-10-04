@@ -1,0 +1,11 @@
+**/.git
+**/.env
+**/cdk
+**/.gitignore
+**/.dist
+**/node_modules
+**/docker-compose*
+**/compose.y*ml
+**/dockerignore
+**/Dockerfile*
+README.md
