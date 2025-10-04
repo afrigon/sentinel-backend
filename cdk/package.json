@@ -22,16 +22,23 @@
   "type": "module",
   "main": "src/index.ts",
   "scripts": {
-    "lint": "eslint .",
+    "lint": "eslint app lib eslint.config.mjs",
     "type-check": "tsc --noEmit",
-    "start": "tsx src/index.ts"
+    "synth": "cdk synth",
+    "diff": "cdk diff",
+    "deploy": "cdk deploy"
   },
   "devDependencies": {
     "@eslint/js": "^9.36.0",
     "@types/node": "^24.6.2",
+    "aws-cdk": "^2.1029.4",
     "eslint": "^9.36.0",
     "tsx": "^4.20.6",
     "typescript": "^5.9.3",
     "typescript-eslint": "^8.45.0"
+  },
+  "dependencies": {
+    "aws-cdk-lib": "^2.219.0",
+    "constructs": "^10.4.2"
   }
 }

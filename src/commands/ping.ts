@@ -1,5 +1,5 @@
 import { CommandInteraction, SlashCommandBuilder } from "discord.js"
-import { Command } from "."
+import { Command } from "./index.ts"
 
 const data = new SlashCommandBuilder()
     .setName("ping")

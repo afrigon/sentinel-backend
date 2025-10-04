@@ -1,6 +1,6 @@
-import { ping } from "./ping"
-import { link } from "./link"
 import { Collection, SlashCommandBuilder, CommandInteraction } from "discord.js"
+import { ping } from "./ping.ts"
+import { link } from "./link.ts"
 
 export interface Command {
     data: SlashCommandBuilder,

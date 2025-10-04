@@ -1,5 +1,5 @@
 import { CommandInteraction, MessageFlags, PermissionFlagsBits, SlashCommandBuilder } from "discord.js"
-import { Command } from "."
+import { Command } from "./index.ts"
 
 const data = new SlashCommandBuilder()
     .setName("link")

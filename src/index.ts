@@ -1,7 +1,7 @@
 import { REST, Routes, Client, Events, GatewayIntentBits, MessageFlags } from "discord.js"
 import { Command as Program } from "commander"
-import { Command, commands } from "./commands"
-import { version } from "../package.json"
+import { Command, commands } from "./commands/index.ts"
+import packageJson from "../package.json" with { type: "json" }
 
 function exit(message: string, code: number = 1): never {
     console.error(message)
@@ -84,7 +84,7 @@ async function serve() {
 
 export function main() {
     const program = new Program()
-        .version(version)
+        .version(packageJson.version)
 
     program
         .command("deploy-commands")
