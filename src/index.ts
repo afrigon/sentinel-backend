@@ -1,6 +1,7 @@
 import { REST, Routes, Client, Events, GatewayIntentBits, MessageFlags } from "discord.js"
 import { Command as Program } from "commander"
 import { Command, commands } from "./commands"
+import { version } from "../package.json"
 
 function exit(message: string, code: number = 1): never {
     console.error(message)
@@ -52,28 +53,28 @@ async function serve() {
     })
 
     client.on(Events.InteractionCreate, async interaction => {
-        // if (!interaction.isChatInputCommand()) {
-        //     return
-        // }
+        if (!interaction.isChatInputCommand()) {
+            return
+        }
 
-        // const command = commands.get(interaction.commandName)
+        const command = commands.get(interaction.commandName)
 
-        // if (command == null) {
-        //     console.error(`Unknown command: ${interaction.commandName}`)
-        //     return
-        // }
+        if (command == null) {
+            console.error(`Unknown command: ${interaction.commandName}`)
+            return
+        }
 
-        // try {
-        //     await command.execute(interaction)
-        // } catch (error) {
-        //     console.error(error)
+        try {
+            await command.execute(interaction)
+        } catch (error) {
+            console.error(error)
 
-        //     if (interaction.replied || interaction.deferred) {
+            if (interaction.replied || interaction.deferred) {
                 await interaction.followUp({ content: "There was an error while executing this command!", flags: MessageFlags.Ephemeral })
-        //     } else {
-        //         await interaction.reply({ content: "There was an error while executing this command!", flags: MessageFlags.Ephemeral })
-        //     }
-        // }
+            } else {
+                await interaction.reply({ content: "There was an error while executing this command!", flags: MessageFlags.Ephemeral })
+            }
+        }
     })
 
     await client.login(discordToken)
@@ -81,7 +82,7 @@ async function serve() {
 
 export function main() {
     const program = new Program()
-        .version("0.0.1") // TODO: read from package.json
+        .version(version)
 
     program
         .command("deploy-commands")
